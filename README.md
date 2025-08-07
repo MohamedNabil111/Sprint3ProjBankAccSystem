@@ -1,0 +1,2 @@
+## Bank Account System
+This is a project for a bank account system with Spring Boot that supports account creation, deposits, withdrawals, transaction tracking, and customer management. The project covers back-end architecture including JPA, repositories, entity relationships, DTOs, REST APIs, validation, exception handling, and REST best practices.
