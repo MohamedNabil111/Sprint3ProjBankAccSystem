@@ -17,12 +17,12 @@ public class TransactionMapper {
         dto.setCustomerId(transaction.getCustomer().getId());
 
         // Handle nullable accounts
-        if (transaction.getFromAccount() != null) {
-            dto.setFromAccountId(transaction.getFromAccount().getId());
-        }
-        if (transaction.getToAccount() != null) {
-            dto.setToAccountId(transaction.getToAccount().getId());
-        }
+//        if (transaction.getFromAccount() != null) {
+//            dto.setFromAccountId(transaction.getFromAccount().getId());
+//        }
+//        if (transaction.getToAccount() != null) {
+//            dto.setToAccountId(transaction.getToAccount().getId());
+//        }
 
         return dto;
     }
