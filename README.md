@@ -34,7 +34,7 @@ This is a project for a bank account system with Spring Boot that supports accou
 
 ## Validation Rules
 
-- `name`, `lastName`: must be between 2 and 100 characters
+- `name`: must be between 2 and 100 characters
 - `email`: Must be valid and unique
 - `phone`: Must be between 10 and 15 characters
 - `address`: Max 255 characters
