@@ -11,7 +11,7 @@ This is a project for a bank account system with Spring Boot that supports accou
 - **Audit Trail**: Automatic timestamp tracking for all operations
 
 
-## 🛠 Technology Stack
+## Technology Stack
 
 - **Backend**: Spring Boot 3.x
 - **Database**: MySQL 8.0
@@ -21,14 +21,14 @@ This is a project for a bank account system with Spring Boot that supports accou
 - **Build Tool**: Maven
 - **Java Version**: 17+
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Java 17 or higher
 - Maven 3.6+
 - MySQL 8.0
 - Git
 
-## 🏗 Project Structure
+## Project Structure
 
 ```
 src/main/java/com/bankapp/
@@ -111,12 +111,3 @@ Invalid input results in HTTP 400 with descriptive error messages.
 - **Duplicate customer email** returns `409 CONFLICT`.
 - All exceptions are handled by a global `@ControllerAdvice`.
 - Screenshots of handled exceptions are attached in docs/images/exceptionHandling folder
-
-## Technology Stack
-- **Backend**: Spring Boot 3.x
-- **Database**: MySQL 8.0
-- **ORM**: Spring Data JPA / Hibernate
-- **Validation**: Bean Validation (Jakarta)
-- **API**: RESTful Web Services
-- **Build Tool**: Maven 3.6+
-- **Java Version**: 17+
