@@ -10,6 +10,66 @@ This is a project for a bank account system with Spring Boot that supports accou
 - **Data Validation**: Comprehensive input validation and error handling
 - **Audit Trail**: Automatic timestamp tracking for all operations
 
+
+## 🛠 Technology Stack
+
+- **Backend**: Spring Boot 3.x
+- **Database**: MySQL 8.0
+- **ORM**: Spring Data JPA / Hibernate
+- **Validation**: Bean Validation (Jakarta)
+- **API**: RESTful Web Services
+- **Build Tool**: Maven
+- **Java Version**: 17+
+
+## 📋 Prerequisites
+
+- Java 17 or higher
+- Maven 3.6+
+- MySQL 8.0
+- Git
+
+## 🏗 Project Structure
+
+```
+src/main/java/com/bankapp/
+├── entities/
+│   ├── Customer.java
+│   ├── BankAccount.java
+│   ├── Transaction.java
+│   └── TransactionType.java (enum)
+│
+├── repositories/
+│   ├── CustomerRepository.java
+│   ├── BankAccountRepository.java
+│   └── TransactionRepository.java
+│
+├── services/
+│   ├── CustomerService.java
+│   ├── BankAccountService.java
+│   └── TransactionService.java
+│
+├── mappers/
+│   ├── CustomerMapper.java
+│   ├── BankAccountMapper.java
+│   └── TransactionMapper.java
+│
+├── controllers/
+│   ├── CustomerController.java
+│   ├── BankAccountController.java
+│   └── TransactionController.java
+│
+├── dtos/
+│   ├── CustomerDTO.java
+│   ├── BankAccountDTO.java
+│   └── TransactionDTO.java
+│   
+├── exception/
+│   ├── GlobalExceptionHandler.java
+│   └── ResourceNotFoundException.java
+│
+└── BankaccountssytemApplication.java
+```
+
 ### Customer Endpoints
 - **POST `/api/customers`**: Create a new customer ![Endpoint Example](docs/images/customer/create_customer.PNG)
 - **GET `/api/customers`**: Get all customers ![Endpoint Example](docs/images/customer/get_all_customers.PNG)
