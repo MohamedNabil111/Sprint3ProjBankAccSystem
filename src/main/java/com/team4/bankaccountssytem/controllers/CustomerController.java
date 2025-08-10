@@ -36,7 +36,6 @@ public class CustomerController {
     }
 
     // Fetch all Customers, we may need some form of authentication
-    // 3ashan mesh sa7 en sada7 mada7 ely 3aref el API ygb ely howa 3awozo
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         List<CustomerDTO> customers = customerService.getAllCustomers();
@@ -86,15 +85,6 @@ public class CustomerController {
             @RequestParam("term") String searchTerm) {
         List<CustomerDTO> customers = customerService.searchCustomers(searchTerm);
         return new ResponseEntity<>(customers, HttpStatus.OK);
-    }
-
-    // Check if a customer exists, I think it's overkill sa7?
-    @GetMapping("/{id}/exists")
-    public ResponseEntity<Map<String, Boolean>> checkCustomerExists(@PathVariable Long id) {
-        boolean exists = customerService.customerExists(id);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("exists", exists);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // Count customers

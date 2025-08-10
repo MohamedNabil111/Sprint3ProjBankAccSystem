@@ -19,6 +19,7 @@ This is a project for a bank account system with Spring Boot that supports accou
 - **GET `/api/customers/email/{email}`**: Get a customer by email ![Endpoint Example](docs/images/customer/get_customer_by_email.PNG)
 - **GET `/api/customers/search?term="name"`**: Search customers by name ![Endpoint Example](docs/images/customer/search_customers_by_name.PNG)
 - **GET `/api/customers/count`**: Get customers count ![Endpoint Example](docs/images/customer/get_customers_count.PNG)
+- **GET `/api/customers/created-between?startDate="startDate"&endDate="endDate"`**: Get customers created in a time range ![Endpoint Example](docs/images/customer/get_customers_created_between.PNG)
 
 ### BankAccount Endpoints
 - **POST `/api/accounts`**: Create a new account ![Endpoint Example](docs/images/account/create_bank_account.PNG)

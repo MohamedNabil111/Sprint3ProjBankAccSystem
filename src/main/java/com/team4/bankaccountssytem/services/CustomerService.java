@@ -5,7 +5,6 @@ import com.team4.bankaccountssytem.entities.Customer;
 import com.team4.bankaccountssytem.mappers.CustomerMapper;
 import com.team4.bankaccountssytem.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,11 +99,6 @@ public class CustomerService {
     }
 
     @Transactional(readOnly = true)
-    public boolean customerExists(Long id) {
-        return customerRepository.existsById(id);
-    }
-
-    @Transactional(readOnly = true)
     public long getTotalCustomerCount() {
         return customerRepository.count();
     }
@@ -112,7 +106,6 @@ public class CustomerService {
     public List<CustomerDTO> findCustomersCreatedBetween(LocalDateTime startDate, LocalDateTime endDate)
     {
         List<Customer> customers = customerRepository.findCustomersCreatedBetween(startDate, endDate);
-        List<CustomerDTO> customerDTOS = customerMapper.toDTOList(customers);
-        return customerDTOS;
+        return customerMapper.toDTOList(customers);
     }
 }
