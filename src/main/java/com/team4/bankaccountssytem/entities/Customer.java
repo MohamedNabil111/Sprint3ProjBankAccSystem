@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -51,6 +53,20 @@ public class Customer {
         this.email = email;
         this.phone = phone;
         this.address = address;
+    }
+
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<BankAccount> bankAccounts = new ArrayList<>();
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     public Long getId() {
