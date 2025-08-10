@@ -1,6 +1,7 @@
 package com.team4.bankaccountssytem.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class Transaction {
     private BigDecimal amount;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime timestamp;
 
     // Relationship: A transaction is made by one customer

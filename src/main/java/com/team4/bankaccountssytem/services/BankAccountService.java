@@ -1,6 +1,7 @@
 package com.team4.bankaccountssytem.services;
 
 import com.team4.bankaccountssytem.DTOs.BankAccountDTO;
+import com.team4.bankaccountssytem.DTOs.CustomerDTO;
 import com.team4.bankaccountssytem.entities.BankAccount;
 import com.team4.bankaccountssytem.entities.TransactionType;
 import com.team4.bankaccountssytem.exceptions.ResourceNotFoundException;
@@ -8,6 +9,7 @@ import com.team4.bankaccountssytem.mappers.BankAccountMapper;
 import com.team4.bankaccountssytem.repositories.BankAccountRepository;
 import com.team4.bankaccountssytem.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,5 +125,17 @@ public class BankAccountService {
     public void transfer(Long fromAccountId, Long toAccountId, Double amount) {
         withdraw(fromAccountId, amount);
         deposit(toAccountId, amount);
+    }
+
+    public List<BankAccountDTO> findByAccountType(String accountType)
+    {
+        List<BankAccount> bankAccounts = accountRepository.findByAccountType(accountType);
+        return mapper.toDTOList(bankAccounts);
+    }
+
+    public List<BankAccountDTO> findByBalanceBetween(Double min,Double max)
+    {
+        List<BankAccount> bankAccounts = accountRepository.findByBalanceBetween(min,max);
+        return mapper.toDTOList(bankAccounts);
     }
 }

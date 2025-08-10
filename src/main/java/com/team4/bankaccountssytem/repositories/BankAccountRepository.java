@@ -22,15 +22,4 @@ public interface BankAccountRepository
             @Param("max") Double max
     );
 
-    @Modifying
-    @Transactional
-    @Query(
-            "UPDATE BankAccount b " +
-                    "SET b.balance = b.balance + :delta " +
-                    "WHERE b.id = :id"
-    )
-    int updateBalanceById(
-            @Param("id") Long id,
-            @Param("delta") Double delta
-    );
 }

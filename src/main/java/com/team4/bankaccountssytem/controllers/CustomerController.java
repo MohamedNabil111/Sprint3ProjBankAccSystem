@@ -4,10 +4,12 @@ import com.team4.bankaccountssytem.DTOs.CustomerDTO;
 import com.team4.bankaccountssytem.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,4 +105,24 @@ public class CustomerController {
         response.put("totalCustomers", count);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/created-between")
+    public ResponseEntity<List<CustomerDTO>> findCustomersCreatedBetween(
+            @RequestParam("startDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime startDate,
+
+            @RequestParam("endDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime endDate)
+    {
+        List<CustomerDTO> customers = customerService.findCustomersCreatedBetween(startDate, endDate);
+
+        if (customers.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(customers);
+    }
+
 }
