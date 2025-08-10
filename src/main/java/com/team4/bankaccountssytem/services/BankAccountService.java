@@ -2,13 +2,11 @@ package com.team4.bankaccountssytem.services;
 
 import com.team4.bankaccountssytem.DTOs.BankAccountDTO;
 import com.team4.bankaccountssytem.entities.BankAccount;
-import com.team4.bankaccountssytem.entities.Transaction;
 import com.team4.bankaccountssytem.entities.TransactionType;
 import com.team4.bankaccountssytem.exceptions.ResourceNotFoundException;
 import com.team4.bankaccountssytem.mappers.BankAccountMapper;
 import com.team4.bankaccountssytem.repositories.BankAccountRepository;
 import com.team4.bankaccountssytem.repositories.CustomerRepository;
-import com.team4.bankaccountssytem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,32 +21,37 @@ public class BankAccountService {
 
     private final BankAccountRepository accountRepository;
     private final CustomerRepository customerRepository;
-    private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
     private final BankAccountMapper mapper;
 
     @Autowired
     public BankAccountService(
             BankAccountRepository accountRepository,
             CustomerRepository customerRepository,
-            TransactionRepository transactionRepository,
+            TransactionService transactionService,
             BankAccountMapper mapper
     ) {
-        this.accountRepository = accountRepository;
-        this.customerRepository = customerRepository;
-        this.transactionRepository = transactionRepository;
-        this.mapper = mapper;
+        this.accountRepository   = accountRepository;
+        this.customerRepository  = customerRepository;
+        this.transactionService  = transactionService;
+        this.mapper              = mapper;
     }
 
     public BankAccountDTO createBankAccount(String accountType, Long customerId) {
-        var cust = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Customer not found: " + customerId));
+        var customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer not found: " + customerId)
+                );
 
-        String acctNum = UUID.randomUUID().toString().replace("-", "")
+        String acctNum = UUID.randomUUID()
+                .toString()
+                .replace("-", "")
                 .substring(0, 16);
 
         BankAccount acct = new BankAccount();
         acct.setAccountNumber(acctNum);
         acct.setAccountType(accountType);
-        acct.setCustomer(cust);
+        acct.setCustomer(customer);
 
         BankAccount saved = accountRepository.save(acct);
         return mapper.toDTO(saved);
@@ -85,13 +88,13 @@ public class BankAccountService {
         acct.setBalance(acct.getBalance() + amount);
         accountRepository.save(acct);
 
-        // record transaction
-        Transaction tx = new Transaction();
-        tx.setType(TransactionType.DEPOSIT);
-        tx.setAmount(BigDecimal.valueOf(amount));
-        tx.setCustomer(acct.getCustomer());
-        tx.setToAccount(acct);
-        transactionRepository.save(tx);
+        transactionService.createAndSaveTransaction(
+                BigDecimal.valueOf(amount),
+                TransactionType.DEPOSIT,
+                acct.getCustomer(),
+                null,
+                acct
+        );
     }
 
     public void withdraw(Long accountId, Double amount) {
@@ -103,17 +106,18 @@ public class BankAccountService {
                         new ResourceNotFoundException("Account not found: " + accountId)
                 );
         if (acct.getBalance() < amount) {
-            throw new RuntimeException("Insufficient funds");
+            throw new IllegalArgumentException("Insufficient funds");
         }
         acct.setBalance(acct.getBalance() - amount);
         accountRepository.save(acct);
 
-        Transaction tx = new Transaction();
-        tx.setType(TransactionType.WITHDRAWAL);
-        tx.setAmount(BigDecimal.valueOf(amount));
-        tx.setCustomer(acct.getCustomer());
-        tx.setFromAccount(acct);
-        transactionRepository.save(tx);
+        transactionService.createAndSaveTransaction(
+                BigDecimal.valueOf(amount),
+                TransactionType.WITHDRAWAL,
+                acct.getCustomer(),
+                acct,
+                null
+        );
     }
 
     public void transfer(Long fromAccountId, Long toAccountId, Double amount) {
