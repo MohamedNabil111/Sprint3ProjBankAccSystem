@@ -54,7 +54,7 @@ public class BankAccountController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{accountType}")
+    @GetMapping("/type/{accountType}")
     public ResponseEntity<List<BankAccountDTO>> findByAccountType(@PathVariable String accountType)
     {
         List<BankAccountDTO> accounts = service.findByAccountType(accountType);
