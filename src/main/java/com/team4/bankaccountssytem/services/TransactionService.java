@@ -8,6 +8,7 @@ import com.team4.bankaccountssytem.entities.TransactionType;
 import com.team4.bankaccountssytem.exceptions.ResourceNotFoundException;
 import com.team4.bankaccountssytem.mappers.TransactionMapper;
 import com.team4.bankaccountssytem.repositories.TransactionRepository;
+import com.team4.bankaccountssytem.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
